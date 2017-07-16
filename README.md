@@ -7,7 +7,7 @@ This approach works, but there are enough calculations and table lookups that th
 
 The goal of this project is to create a efficient and user-friendly solar design tool that is open source.  
   
-##Future Development
+## Future Development
 * Database of inverters and modules
 * Climatic design condition lookup
 * String sizing tool
