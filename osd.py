@@ -22,7 +22,7 @@ class  Circuit(object):
         length of circuit in feet
     parallel_sets: int
         number of paralle sets of conductors
-    cond_per_conduit: int
+    ccc_count: int
         Current carrying conductors per conduit. Does not include neutral.
         For the conditions of use derate calculations
     height_above_roof: float
@@ -31,14 +31,14 @@ class  Circuit(object):
         Degrees Fahrenheit
         Recommended ASHRAE design 2 percent high
         Passed by parent class in future?
-    cond_metal: string
+    cond_material: string
         Conductor metal as "Cu" or "Al"
     cond_insulation: string
         Conductor insulation type
-    cond_size: string
-    egc_metal: string
+    cond_size_base: string
+    egc_material: string
         Equipment ground condcutor metal as "Cu" or "Al"
-    egc_size: string
+    egc_size_base: string
         Equipment ground condcutor size
     neutral: int
         Use 1 to include neutral in conduit size calculation.
@@ -52,8 +52,8 @@ class  Circuit(object):
     ___________________
     ocpd
     rooftop_adder
-    cond_min_size
-    egc_min_size
+    cond_size_base
+    egc_size_base
     v_drop_volts
     v_drop_percent
     v_drop_in_range
@@ -64,7 +64,7 @@ class  Circuit(object):
                  voltage=None, current=None, length=None, parallel_sets=1,
                  cond_per_conduit=3, height_above_roof=3.5, temp_high_amb=None,
                  cond_metal=None, cond_insulation=None, cond_size=None,
-                 egc_metal='Cu', egc_size=None, neutral=1, conduit_size_SF=1.3,
+                 egc_metal='Cu', egc_size_base=None, neutral=1, conduit_size_SF=1.3,
                  conduit_type='EMT'):
         super(Circuit, self).__init__()
         self.name = name
@@ -74,14 +74,14 @@ class  Circuit(object):
         self.current = current
         self.length = length
         self.parallel_sets = parallel_sets
-        self.cond_per_conduit = cond_per_conduit
+        self.ccc_count = ccc_count
         self.height_above_roof = height_above_roof
         self.temp_high_amb = temp_high_amb
         self.cond_metal = cond_metal
         self.cond_insulation = cond_insulation
         self.cond_size = cond_size
         self.egc_metal = egc_metal
-        self.egc_size = egc_size
+        self.egc_size_base = egc_size_base
         self.neutral = neutral
         self.conduit_size_SF = conduit_size_SF
         self.conduit_type = conduit_type
@@ -96,8 +96,9 @@ class  Circuit(object):
 
 
     def _rooftop_adder(self):
-        """Table removed in NEC 2017, valid for 2008, 2011, 2014
-        Temperatures in Fahrenheit
+        """[Needs to be updated]
+        Table removed in NEC 2017 (now only a single value), valid for 2008, 2011, 2014
+        Temperatures in Fahrenheit 
         """
         temp = 0
         if self.height_above_roof == -1:
@@ -114,7 +115,8 @@ class  Circuit(object):
 
 
     def _amb_temp_correction(self):
-        """NEC 310.15(B)(2) Ambient Temperatue Correction Factors.
+        """[Needs to be updated]
+        NEC 310.15(B)(2) Ambient Temperatue Correction Factors.
         Temp of conductor assumed to be 90C 194F
         Table temp from 310.15(B)(16) of 30C 86F
         """
@@ -123,22 +125,23 @@ class  Circuit(object):
 
 
     def _cond_per_raceway_derate(self):
-        """NEC 310.15(B)(3)(a) Adjustment factors for more than three
+        """[Needs to be updated]
+        NEC 310.15(B)(3)(a) Adjustment factors for more than three
         current-carrying conductors in a raceway or cable
         """
-        if self.cond_per_conduit < 4:
+        if self.ccc_count < 4:
             return(1.0)
-        elif self.cond_per_conduit <= 6:
+        elif self.ccc_count <= 6:
             return(0.8)
-        elif self.cond_per_conduit <= 9:
+        elif self.ccc_count <= 9:
             return(0.7)
-        elif self.cond_per_conduit <= 20:
+        elif self.ccc_count <= 20:
             return(0.5)
-        elif self.cond_per_conduit <= 30:
+        elif self.ccc_count <= 30:
             return(0.45)
-        elif self.cond_per_conduit <= 40:
+        elif self.ccc_count <= 40:
             return(0.4)
-        elif self.cond_per_conduit >= 41:
+        elif self.ccc_count >= 41:
             return(0.35)
 
 
@@ -147,10 +150,10 @@ class DcCircuit(Circuit):
     Class for AC circuits.
 
     """
-    def __init__(self, name=None, cond_per_conduit=2):
+    def __init__(self, name=None, ccc_count=2):
         super(DcCircuit, self).__init__()
         self.name = name
-        self.cond_per_conduit = cond_per_conduit
+        self.ccc_count = ccc_count
 
 class AcCircuit(Circuit):
     """docstring for AcCircuit.
