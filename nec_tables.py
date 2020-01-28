@@ -338,7 +338,7 @@ ocpd_sizes = [15, 20, 25, 30, 35,
               1600, 2000, 2500, 3000, 4000,
               5000, 6000]
 
-# Standard adders from NEC 2014 310.15(B)(3)(c) in INCHES and °C
+# Standard adders from NEC 2014 310.15(B)(3)(c) in INCHES and deg C
 rooftop_adder_2014 = [[0.5,
                        3.5,
                        12,
@@ -348,37 +348,16 @@ rooftop_adder_2014 = [[0.5,
                        17,
                        14]]
 
-# Standard adders from NEC 2017 310.15(B)(3)(c) in INCHES and °C
-# [XX,YY]  :: XX=distance above roof in INCHES, YY=°C adder to Ambient Temperature
+# Standard adders from NEC 2017 310.15(B)(3)(c) in INCHES and deg C
+# [XX,YY]  :: XX=distance above roof in INCHES, YY=degC adder to Ambient Temperature
 rooftop_adder_2017 = [0.875, 33]
 
 # Standard wire insulations from NEC 2017 Table 310.16(B)(3)(c) columns
-cond_insulation =  {60:{'TW',
-                        'UF'},
-                    75:{'RHW',
-                        'THHW',
-                        'THW',
-                        'THWN',
-                        'XHHW',
-                        'USE',
-                        'ZW'},
-                    90:{'TBS',
-                        'SA',
-                        'FEP',
-                        'FEPB',
-                        'MI',
-                        'PV',
-                        'RHH',
-                        'RHW-2',
-                        'THHN',
-                        'THHW',
-                        'THW-2',
-                        'THWN-2',
-                        'USE-2',
-                        'XHH',
-                        'XHHW',
-                        'XHHW-2',
-                        'ZW-2'}
+cond_insulation =  {60:{'TW', 'UF'},
+                    75:{'RHW', 'THHW', 'THW', 'THWN', 'XHHW', 'USE', 'ZW'},
+                    90:{'TBS', 'SA', 'FEP', 'FEPB', 'MI', 'PV', 'RHH', 'RHW-2',
+                        'THHN', 'THHW', 'THW-2', 'THWN-2', 'USE-2', 'XHH',
+                        'XHHW', 'XHHW-2', 'ZW-2'}}
 
 # Current-carrying conductor count derates from NEC 2017 310.15(B)(3)(a) for simultaneously energized conductors
 # (XX,YY)  :: XX=current-carring conductor count, YY=ccc_count_derate,
@@ -395,7 +374,7 @@ ccc_count_derate =  [( 3,1.00),
                      (40,0.40),
                      (41,0.35)]
 
-# Ambient Temperature Adjustments from NEC 2017 310.15(B)(2)(a) based on 30°C
+# Ambient Temperature Adjustments from NEC 2017 310.15(B)(2)(a) based on 30 C
 # XX:{YY:ZZ, YY:ZZ, YY:ZZ}  :: XX=Amb Temperature, YY=cond_insulation, ZZ=amb_temp_derate
 amb_temp_derate =   {10:{60:1.29, 75:1.20, 90:1.15},
                      11:{60:1.22, 75:1.15, 90:1.12},
