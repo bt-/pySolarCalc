@@ -438,4 +438,200 @@ egc_size_base = {15: {'Cu': '14', 'Al': '12'},
                  5000: {'Cu': '700', 'Al': '1200'},
                  6000: {'Cu': '800', 'Al': '1200'}}
 
-conduit_type = []
+# Percent of Cross Section of conduit for Conductors and Cables from NEC 2017 Chapter 9, Table 1
+# (XX,YY)  :: XX=conductor/cable count, YY=conduit_xsection max fill
+condit_xsection =  [(1,0.53),
+                    (2,0.31),
+                    (3,0.40)]
+
+conduit_type = ['EMT',
+                'ENT',
+                'FMC',
+                'IMC',
+                'LFNC-A',
+                'LFNC-B',
+                'LFNC-C',
+                'LFMC',
+                'RMC',
+                'PVC80'.
+                'PVC40',
+                'HDPE',
+                'PVC A',
+                'PVC EB']
+
+# Cross Section of conduit for Conductors and Cables from NEC 2017 Chapter 9, Table 4
+# XX:{YY:ZZ}  :: XX=conduit_type, YY=trade size of conduit, ZZ=Total Area (100%)
+            # Article 358 - Electrical Metallic Tubing (EMT)
+conduit_area =  {'EMT':{
+                        0.50:0.304,
+                        0.75:0.533,
+                        1.00:0.864,
+                        1.25:1.496,
+                        1.50:2.036,
+                        2.00:3.356,
+                        2.50:5.858,
+                        3.00:8.846,
+                        3.50:11.545,
+                        4.00:14.753},
+            # Article 362 - Electrical Nonmetallic Tubing (ENT)
+                 'ENT':{
+                        0.50:0.285,
+                        0.75:0.508,
+                        1.00:0.832,
+                        1.25:1.453,
+                        1.50:1.986,
+                        2.00:3.291},
+            # Article 348 - Flexible Metal Conduit (FMC)
+                 'FMC':{
+                        0.50:0.317,
+                        0.75:0.533,
+                        1.00:0.817,
+                        1.25:1.277,
+                        1.50:1.858,
+                        2.00:3.269,
+                        2.50:4.909,
+                        3.00:7.069,
+                        3.50:9.621,
+                        4.00:12.566},
+            # Article 342 - Intermediate Metal Conduit (IMC)
+                 'IMC':{
+                        0.50:0.342,
+                        0.75:0.586,
+                        1.00:0.959,
+                        1.25:1.647,
+                        1.50:2.225,
+                        2.00:3.630,
+                        2.50:5.135,
+                        3.00:7.922,
+                        3.50:10.584,
+                        4.00:13.631},
+            # Article 356.2(1) - Liquidtight Flexible Nonmetallic Conduit (LFNC-A)
+                 'LFNC-A':{
+                        0.50:0.312,
+                        0.75:0.535,
+                        1.00:0.854,
+                        1.25:1.502,
+                        1.50:2.018,
+                        2.00:3.343},
+            # Article 356.2(2) - Liquidtight Flexible Nonmetallic Conduit (LFNC-B)
+                 'LFNC-B':{
+                        0.50:0.314,
+                        0.75:0.541,
+                        1.00:0.873,
+                        1.25:1.528,
+                        1.50:1.981,
+                        2.00:3.246},
+            # Article 356.2(3) - Liquidtight Flexible Nonmetallic Conduit (LFNC-C)
+                 'LFNC-C':{
+                        0.50:0.302,
+                        0.75:0.522,
+                        1.00:0.833,
+                        1.25:1.474,
+                        1.50:1.973,
+                        2.00:3.285},
+            # Article 350 - Liquidtight Flexible Metal Conduit (LFMC)
+                 'LFMC':{
+                        0.50:0.314,
+                        0.75:0.541,
+                        1.00:0.873,
+                        1.25:1.528,
+                        1.50:1.981,
+                        2.00:3.246,
+                        2.50:4.881,
+                        3.00:7.475,
+                        3.50:9.731,
+                        4.00:12.692},
+            # Article 344 - Rigid Metal Conduit (RMC)
+                 'RMC':{
+                        0.50:0.314,
+                        0.75:0.549,
+                        1.00:0.887,
+                        1.25:1.526,
+                        1.50:2.071,
+                        2.00:3.408,
+                        2.50:4.866,
+                        3.00:7.499,
+                        3.50:10.010,
+                        4.00:12.882,
+                        5.00:20.212,
+                        6.00:29.158},
+            # Article 352 - Rigid PVC Conduit (PVC), Schedule 80
+                 'PVC80':{
+                        0.50:0.217,
+                        0.75:0.409,
+                        1.00:0.688,
+                        1.25:1.237,
+                        1.50:1.711,
+                        2.00:2.874,
+                        2.50:4.119,
+                        3.00:6.442,
+                        3.50:8.688,
+                        4.00:11.258,
+                        5.00:17.855,
+                        6.00:25.598},
+            # Article 352 - Rigid PVC Conduit (PVC), Schedule 40
+                 'PVC40':{
+                        0.50:0.285,
+                        0.75:0.508,
+                        1.00:0.832,
+                        1.25:1.453,
+                        1.50:1.986,
+                        2.00:3.291,
+                        2.50:4.695,
+                        3.00:7.268,
+                        3.50:9.737,
+                        4.00:12.554,
+                        5.00:19.761,
+                        6.00:28.567},
+            # Article 353 - High-Density Polyethylene (HDPE)
+                 'HDPE':{
+                        0.50:0.285,
+                        0.75:0.508,
+                        1.00:0.832,
+                        1.25:1.453,
+                        1.50:1.986,
+                        2.00:3.291,
+                        2.50:4.695,
+                        3.00:7.268,
+                        3.50:9.737,
+                        4.00:12.554,
+                        5.00:19.761,
+                        6.00:28.567},
+            # Article 352 - Rigid PVC Conduit, Type A
+                 'PVC A':{
+                        0.50:0.385,
+                        0.75:0.650,
+                        1.00:1.085,
+                        1.25:1.767,
+                        1.50:2.324,
+                        2.00:3.647,
+                        2.50:5.453,
+                        3.00:8.194,
+                        3.50:10.694,
+                        4.00:13.723},
+            # Article 352 - Rigid PVC Conduit, Type EB
+                 'PVC EB':{
+                        2.00:3.874,
+                        3.00:8.709,
+                        3.50:11.365,
+                        4.00:14.448,
+                        5.00:22.195,
+                        6.00:31.530}}
+
+# Conduit material for AC resistance values
+# (XX,YY)  :: XX=conduit_type, YY=conduit_material
+conduit_material = [('EMT','Aluminum'),
+                    ('ENT','PVC'),
+                    ('FMC','Aluminum'),
+                    ('IMC','Steel'),
+                    ('LFNC-A','PVC'),
+                    ('LFNC-B','PVC'),
+                    ('LFNC-C','PVC'),
+                    ('LFMC','Aluminum'),
+                    ('RMC','Steel'),
+                    ('PVC80','PVC'),
+                    ('PVC40','PVC'),
+                    ('HDPE','PVC'),
+                    ('PVC A','PVC'),
+                    ('PVC EB','PVC')]
+
