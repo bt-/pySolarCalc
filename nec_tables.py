@@ -338,19 +338,13 @@ ocpd_sizes = [15, 20, 25, 30, 35,
               1600, 2000, 2500, 3000, 4000,
               5000, 6000]
 
-# Standard adders from NEC 2014 310.15(B)(3)(c) in INCHES and deg C
-rooftop_adder_2014 = [[0.5,
-                       3.5,
-                       12,
-                       36],
-                      [33,
-                       22,
-                       17,
-                       14]]
-
-# Standard adders from NEC 2017 310.15(B)(3)(c) in INCHES and deg C
-# [XX,YY]  : :  XX=distance above roof in INCHES, YY=degC adder to Ambient Temperature
-rooftop_adder_2017 = [0.875, 33]
+# Standard adders from NEC 310.15(B)(3)(c) in INCHES and deg C
+# NEC version, distance from roof, adder in deg C
+rooftop_adder = {'2014': {0.5: 33,
+                          3.5: 22,
+                          12: 17,
+                          36: 14},
+                 '2017': {0.875: 60}}
 
 # Standard wire insulations from NEC 2017 Table 310.16(B)(3)(c) columns
 cond_insulation = {60: {'TW', 'UF'},
@@ -361,23 +355,22 @@ cond_insulation = {60: {'TW', 'UF'},
 
 # Current-carrying conductor count derates from NEC 2017 310.15(B)(3)(a) for
 # simultaneously energized conductors
-# (XX,YY)  : :  XX=current-carring conductor count, YY=ccc_count_derate,
-ccc_count_derate = [(3, 1.00),
-                    (4, 0.80),
-                    (6, 0.80),
-                    (7, 0.70),
-                    (9, 0.70),
-                    (10, 0.50),
-                    (20, 0.50),
-                    (21, 0.45),
-                    (30, 0.45),
-                    (31, 0.40),
-                    (40, 0.40),
-                    (41, 0.35)]
+# current-carring conductor count, ccc_count_derate,
+ccc_count_derate = {3: {1.00},
+                    4: {0.80},
+                    6: {0.80},
+                    7: {0.70},
+                    9: {0.70},
+                    10: {0.50},
+                    20: {0.50},
+                    21: {0.45},
+                    30: {0.45},
+                    31: {0.40},
+                    40: {0.40},
+                    41: {0.35}}
 
 # Ambient Temperature Adjustments from NEC 2017 310.15(B)(2)(a) based on 30 C
-# XX: {YY: ZZ, YY: ZZ, YY: ZZ}  : :  XX=Amb Temperature, YY=cond_insulation,
-# ZZ=amb_temp_derate
+# Amb Temperature, cond_insulation, ZZ=amb_temp_derate
 amb_temp_derate = {10: {60: 1.29, 75: 1.20, 90: 1.15},
                    11: {60: 1.22, 75: 1.15, 90: 1.12},
                    15: {60: 1.22, 75: 1.15, 90: 1.12},
@@ -417,7 +410,7 @@ amb_temp_derate = {10: {60: 1.29, 75: 1.20, 90: 1.15},
                    85: {60: 0.00, 75: 0.00, 90: 0.29}}
 
 # Minimum Size EGC for Grounding Raceway and Equipment from NEC 2017 Table 250.122
-# XX: {YY: ZZ, YY: ZZ, YY: ZZ}  : :  XX=ocpd_sizes, YY=cond_material, ZZ=egc_size_base
+# ocpd_sizes, cond_material, egc_size_base
 egc_size_base = {15: {'Cu': '14', 'Al': '12'},
                  20: {'Cu': '12', 'Al': '10'},
                  60: {'Cu': '10', 'Al': '8'},
@@ -439,8 +432,8 @@ egc_size_base = {15: {'Cu': '14', 'Al': '12'},
                  6000: {'Cu': '800', 'Al': '1200'}}
 
 # Percent of Cross Section of conduit for Conductors and Cables from NEC 2017 Chapter 9, Table 1
-# (XX,YY)  :: XX=conductor/cable count, YY=conduit_xsection max fill
-condit_xsection =  [(1,0.53),
+# conductor/cable count, conduit_xsection max fill
+condiut_xsection =  [(1,0.53),
                     (2,0.31),
                     (3,0.40)]
 
@@ -448,19 +441,19 @@ conduit_type = ['EMT',
                 'ENT',
                 'FMC',
                 'IMC',
-                'LFNC-A',
-                'LFNC-B',
-                'LFNC-C',
+                'LFNC_A',
+                'LFNC_B',
+                'LFNC_C',
                 'LFMC',
                 'RMC',
-                'PVC80'.
+                'PVC80',
                 'PVC40',
                 'HDPE',
-                'PVC A',
-                'PVC EB']
+                'PVC-A',
+                'PVC-EB']
 
 # Cross Section of conduit for Conductors and Cables from NEC 2017 Chapter 9, Table 4
-# XX:{YY: ZZ}  :: XX=conduit_type, YY=trade size of conduit, ZZ=Total Area in INCHES^2 (100%)
+# conduit_type, conduit trade size, Total Area in INCHES^2 at 100%
             # Article 358 - Electrical Metallic Tubing (EMT)
 conduit_area =  {'EMT':{
                         0.50: 0.304,
@@ -506,7 +499,7 @@ conduit_area =  {'EMT':{
                         3.50: 10.584,
                         4.00: 13.631},
             # Article 356.2(1) - Liquidtight Flexible Nonmetallic Conduit (LFNC-A)
-                 'LFNC-A':{
+                 'LFNC_A':{
                         0.50: 0.312,
                         0.75: 0.535,
                         1.00: 0.854,
@@ -514,7 +507,7 @@ conduit_area =  {'EMT':{
                         1.50: 2.018,
                         2.00: 3.343},
             # Article 356.2(2) - Liquidtight Flexible Nonmetallic Conduit (LFNC-B)
-                 'LFNC-B':{
+                 'LFNC_B':{
                         0.50: 0.314,
                         0.75: 0.541,
                         1.00: 0.873,
@@ -522,7 +515,7 @@ conduit_area =  {'EMT':{
                         1.50: 1.981,
                         2.00: 3.246},
             # Article 356.2(3) - Liquidtight Flexible Nonmetallic Conduit (LFNC-C)
-                 'LFNC-C':{
+                 'LFNC_C':{
                         0.50: 0.302,
                         0.75: 0.522,
                         1.00: 0.833,
@@ -598,7 +591,7 @@ conduit_area =  {'EMT':{
                         5.00: 19.761,
                         6.00: 28.567},
             # Article 352 - Rigid PVC Conduit, Type A
-                 'PVC A':{
+                 'PVC-A':{
                         0.50: 0.385,
                         0.75: 0.650,
                         1.00: 1.085,
@@ -610,7 +603,7 @@ conduit_area =  {'EMT':{
                         3.50: 10.694,
                         4.00: 13.723},
             # Article 352 - Rigid PVC Conduit, Type EB
-                 'PVC EB':{
+                 'PVC-EB':{
                         2.00: 3.874,
                         3.00: 8.709,
                         3.50: 11.365,
@@ -619,24 +612,24 @@ conduit_area =  {'EMT':{
                         6.00: 31.530}}
 
 # Conduit material for AC resistance values
-# (XX,YY)  :: XX=conduit_type, YY=conduit_material
-conduit_material = [('EMT','Alum'),
-                    ('ENT','PVC'),
-                    ('FMC','Alum'),
-                    ('IMC','Steel'),
-                    ('LFNC-A','PVC'),
-                    ('LFNC-B','PVC'),
-                    ('LFNC-C','PVC'),
-                    ('LFMC','Alum'),
-                    ('RMC','Steel'),
-                    ('PVC80','PVC'),
-                    ('PVC40','PVC'),
-                    ('HDPE','PVC'),
-                    ('PVC A','PVC'),
-                    ('PVC EB','PVC')]
+# conduit_type, conduit_material
+conduit_material = {'EMT': 'Alum',
+                    'ENT': 'PVC',
+                    'FMC': 'Alum',
+                    'IMC': 'Steel',
+                    'LFNC_A': 'PVC',
+                    'LFNC_B': 'PVC',
+                    'LFNC_C': 'PVC',
+                    'LFMC': 'Alum',
+                    'RMC': 'Steel',
+                    'PVC80': 'PVC',
+                    'PVC40': 'PVC',
+                    'HDPE': 'PVC',
+                    'PVC-A': 'PVC',
+                    'PVC-EB': 'PVC'}
 
-# Copper conductor resistance (R) per 1000 FEET from NEC 2017 Chapter 9, Table 9
-# XX:{YY: ZZ}  :: XX=conduit_material, YY=cond_size, ZZ=cond_reactance
+# Copper conductor resistance (R) from NEC 2017 Chapter 9, Table 9
+# conduit_material, cond_size, cond_resistance per 1000 FEET
 cond_resistance_dc =  {'Cu':{
                          '12': 1.980,
                          '10': 1.240,
@@ -694,8 +687,8 @@ cond_resistance_dc =  {'Cu':{
                          '1750': 0.0121,
                          '2000': 0.0106}}
 
-# AC conductor reactance (XL) per 1000 FEET for all cond_material from NEC 2017 Chapter 9, Table 9
-# XX:{YY: ZZ}  :: XX=conduit_material, YY=cond_size, ZZ=cond_reactance
+# AC conductor reactance (XL) for all cond_material from NEC 2017 Chapter 9, Table 9
+# conduit_material, cond_size, cond_reactance per 1000 FEET
 cond_reactance =  {'PVC':{
                          '12': 0.054,
                          '10': 0.050,
@@ -760,8 +753,8 @@ cond_reactance =  {'PVC':{
                          '750': 0.048,
                          '1000': 0.046}}
 
-# Copper conductor resistance (R) per 1000 FEET from NEC 2017 Chapter 9, Table 9
-# XX:{YY: ZZ}  :: XX=conduit_material, YY=cond_size, ZZ=cond_reactance
+# Copper conductor resistance (R) from NEC 2017 Chapter 9, Table 9
+# conduit_material, cond_size, cond_resistance per 1000 FEET
 cond_resistance_cu =  {'PVC':{
                          '12': 2.000,
                          '10': 1.200,
@@ -826,9 +819,9 @@ cond_resistance_cu =  {'PVC':{
                          '750': 0.021,
                          '1000': 0.018}}
 
-# Aluminum conductor resistance (R) per 1000 FEET from NEC 2017 Chapter 9, Table 9
-# XX:{YY: ZZ}  :: XX=conduit_material, YY=cond_size, ZZ=cond_reactance
-cond_resistance_al =  {'PVC':{
+# Aluminum conductor resistance (R) from NEC 2017 Chapter 9, Table 9
+# conduit_material, cond_size, cond_resistance per 1000 FEET
+cond_resistance_alum =  {'PVC':{
                          '12': 3.200,
                          '10': 2.000,
                          '8': 1.300,
