@@ -356,18 +356,18 @@ cond_insulation = {60: {'TW', 'UF'},
 # Current-carrying conductor count derates from NEC 2017 310.15(B)(3)(a) for
 # simultaneously energized conductors
 # current-carring conductor count, ccc_count_derate,
-ccc_count_derate = {3: {1.00},
-                    4: {0.80},
-                    6: {0.80},
-                    7: {0.70},
-                    9: {0.70},
-                    10: {0.50},
-                    20: {0.50},
-                    21: {0.45},
-                    30: {0.45},
-                    31: {0.40},
-                    40: {0.40},
-                    41: {0.35}}
+ccc_count_derate = {3: 1.00,
+                    4: 0.80,
+                    6: 0.80,
+                    7: 0.70,
+                    9: 0.70,
+                    10: 0.50,
+                    20: 0.50,
+                    21: 0.45,
+                    30: 0.45,
+                    31: 0.40,
+                    40: 0.40,
+                    41: 0.35}
 
 # Ambient Temperature Adjustments from NEC 2017 310.15(B)(2)(a) based on 30 C
 # Amb Temperature, cond_insulation, ZZ=amb_temp_derate
