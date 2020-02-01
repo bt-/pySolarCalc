@@ -62,7 +62,7 @@ class  Circuit(object):
     """
     def __init__(self, name=None, start=None, end=None,
                  voltage=None, current=None, length=None, parallel_sets=1,
-                 cond_per_conduit=3, height_above_roof=3.5, temp_high_amb=None,
+                 ccc_count=3, height_above_roof=3.5, temp_high_amb=None,
                  cond_metal=None, cond_insulation=None, cond_size=None,
                  egc_metal='Cu', egc_size_base=None, neutral=1, conduit_size_SF=1.3,
                  conduit_type='EMT'):
@@ -98,7 +98,7 @@ class  Circuit(object):
     def _rooftop_adder(self):
         """[Needs to be updated]
         Table removed in NEC 2017 (now only a single value), valid for 2008, 2011, 2014
-        Temperatures in Fahrenheit 
+        Temperatures in Fahrenheit
         """
         temp = 0
         if self.height_above_roof == -1:

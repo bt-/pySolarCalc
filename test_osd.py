@@ -3,9 +3,9 @@ import osd
 
 ac_circ = osd.Circuit(name='inv01', start='INV.01', end='PV.PNLBD.01',
                       voltage=480, current=28.9, length=165, parallel_sets=1,
-                      cond_per_conduit=3, height_above_roof=3.5,
+                      ccc_count=3, height_above_roof=3.5,
                       temp_high_amb=97, cond_metal='Al', cond_insulation='THWN-2',
-                      cond_size=None, egc_metal='Cu', egc_size=None, neutral=1,
+                      cond_size=None, egc_metal='Cu', egc_size_base=None, neutral=1,
                       conduit_size_SF=1.3, conduit_type='EMT')
 
 class OsdTests(unittest.TestCase):
@@ -41,7 +41,7 @@ class OsdTests(unittest.TestCase):
                         (20,0.5),(21,0.45),(30,0.45),(31,0.4),(40,0.4),
                         (41,0.35)]
         for pair in cond_derates:
-            ac_circ.cond_per_conduit = pair[0]
+            ac_circ.ccc_count = pair[0]
             self.assertEqual(pair[1], ac_circ._cond_per_raceway_derate(),
                              'Conductors per conduit derate test')
 
