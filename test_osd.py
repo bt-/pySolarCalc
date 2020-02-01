@@ -11,13 +11,21 @@ ac_circ = osd.Circuit(name='inv01', start='INV.01', end='PV.PNLBD.01',
 class OsdTests(unittest.TestCase):
     """Tests for osd.py."""
     def test_rooftop_adder(self):
-        roof_adders = [(0.5,60),(0.501,40),(3.5,40),(3.501,30),(12,30),
-                       (12.01,25),(36,25),(36.01,0)]
-        for pair in roof_adders:
-            ac_circ.height_above_roof = pair[0]
-            temp = pair[1] + ac_circ.temp_high_amb
-            self.assertEqual(temp, ac_circ._rooftop_adder(),
-                             'amb_temp: {}, height above roof: {}, rooftop adder: {}'.format(ac_circ.temp_high_amb, ac_circ.height_above_roof, ac_circ._rooftop_adder()))
+        roof_adders = [(0.5, 60), (0.501, 40), (3.5, 40), (3.501, 30), (12, 30),
+                       (12.01, 25), (36, 25), (36.01, 0)]
+        for height_temp_adder_pair in roof_adders:
+            print('########################')
+            print(height_temp_adder_pair)
+            ac_circ.height_above_roof = height_temp_adder_pair[0]
+            print('height above roof: {}'.format(ac_circ.height_above_roof))
+            temp = height_temp_adder_pair[1] + ac_circ.temp_high_amb
+            print('check temp: {}'.format(temp))
+            self.assertEqual(temp, ac_circ._get_amb_temp_plus_rooftop_adder(),
+                             'amb_temp: {}, height above roof: {},\
+                              amb + rooftop adder: {}'.format(
+                              ac_circ.temp_high_amb,
+                              ac_circ.height_above_roof,
+                              ac_circ._get_amb_temp_plus_rooftop_adder()))
 
     def test_amb_temp_corr(self):
         ac_circ.height_above_roof = 3

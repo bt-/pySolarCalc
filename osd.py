@@ -94,25 +94,23 @@ class  Circuit(object):
         """
         pass
 
-
-    def _rooftop_adder(self):
+    def _get_amb_temp_plus_rooftop_adder(self):
         """[Needs to be updated]
         Table removed in NEC 2017 (now only a single value), valid for 2008, 2011, 2014
         Temperatures in Fahrenheit
         """
-        temp = 0
         if self.height_above_roof == -1:
-            temp = self.temp_high_amb
+            return self.temp_high_amb
         elif self.height_above_roof <= 0.5:
-            temp = self.temp_high_amb + 60
+            return self.temp_high_amb + 60
         elif self.height_above_roof <= 3.5:
-            temp = self.temp_high_amb + 40
+            return self.temp_high_amb + 40
         elif self.height_above_roof <= 12:
-            temp = self.temp_high_amb + 30
-        elif self.height_above_roof > 12:
-            temp = self.temp_high_amb + 25
-        return(temp)
-
+            return self.temp_high_amb + 30
+        elif self.height_above_roof <= 36:
+            return self.temp_high_amb + 25
+        elif self.height_above_roof > 36:
+            return self.temp_high_amb + 0
 
     def _amb_temp_correction(self):
         """[Needs to be updated]
@@ -120,9 +118,8 @@ class  Circuit(object):
         Temp of conductor assumed to be 90C 194F
         Table temp from 310.15(B)(16) of 30C 86F
         """
-        t_amb = self._rooftop_adder()
-        return(((194.0-t_amb)/(194.0-86)) ** 0.5)
-
+        t_amb = self._get_amb_temp_plus_rooftop_adder()
+        return(((194.0 - t_amb) / (194.0 - 86)) ** 0.5)
 
     def _cond_per_raceway_derate(self):
         """[Needs to be updated]
