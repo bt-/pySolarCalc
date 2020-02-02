@@ -1,0 +1,21 @@
+# Conda environment file for pySolarCalc
+# To create a conda environment using this file:
+# conda env create -f environment.yml
+# To setup for development do this next:
+# conda activate pySolarCalc
+# conda install -c conda-forge jupyterlab
+# conda install npm
+# jupyter labextension install @pyviz/jupyterlab_pyviz
+name: pySolarCalc
+channels:
+- pyviz
+dependencies:
+- coveralls
+- flake8
+- holoviz # vizualization packages and numpy and pandas
+- pip
+- pytest
+- pytest-cov
+- pytest-mock
+- pytest-timeout
+- python=3.7

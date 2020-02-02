@@ -1,0 +1,47 @@
+language: python
+sudo: false # if false, use TravisCI's container based build
+
+# assume linux if not specified
+addons:
+    apt:
+        packages:
+            - ccache
+
+cache:
+    - ccache
+
+# setup miniconda for numpy, scipy, pandas, etc.
+before_install:
+    - echo "before install"
+    - export PYVER="3"
+    - export OSSTR="Linux-x86_64.sh";
+    - export PATH=/usr/lib/ccache:$PATH;
+    - export BASE="http://repo.continuum.io/miniconda/Miniconda"
+    - export CONDAVER="4.6.14"
+    - wget $BASE$PYVER-$CONDAVER-$OSSTR -O miniconda.sh;
+    - bash miniconda.sh -b -p $HOME/miniconda
+    - export PATH="$HOME/miniconda/bin:$PATH"
+    - hash -r
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    - conda info -a
+
+install:
+    - echo "install"
+    - conda env create --file ci/environment.yml
+    - source activate pySolarCalc
+    - conda list
+    - echo $PATH
+    - ls -l /home/travis/miniconda/envs/pySolarCalc/lib
+    - pip install -e .
+
+script:
+    - flake8
+    - pytest --cov=osd --cov-report term-missing
+
+after_script:
+    pip install codecov;
+    codecov -e TRAVIS_PYTHON_VERSION;
+
+after_success:
+    coveralls
