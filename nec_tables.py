@@ -409,7 +409,8 @@ amb_temp_derate = {10: {60: 1.29, 75: 1.20, 90: 1.15},
                    81: {60: 0.00, 75: 0.00, 90: 0.29},
                    85: {60: 0.00, 75: 0.00, 90: 0.29}}
 
-# Minimum Size EGC for Grounding Raceway and Equipment from NEC 2017 Table 250.122
+# Minimum Size EGC for Grounding Raceway and Equipment
+# from NEC 2017 Table 250.122
 # ocpd_sizes, cond_material, egc_size_base
 egc_size_base = {15: {'Cu': '14', 'Al': '12'},
                  20: {'Cu': '12', 'Al': '10'},
@@ -431,11 +432,12 @@ egc_size_base = {15: {'Cu': '14', 'Al': '12'},
                  5000: {'Cu': '700', 'Al': '1200'},
                  6000: {'Cu': '800', 'Al': '1200'}}
 
-# Percent of Cross Section of conduit for Conductors and Cables from NEC 2017 Chapter 9, Table 1
+# Percent of Cross Section of conduit for Conductors and Cables
+# from NEC 2017 Chapter 9, Table 1
 # conductor/cable count, conduit_xsection max fill
-condiut_xsection =  [(1,0.53),
-                    (2,0.31),
-                    (3,0.40)]
+condiut_xsection = [(1, 0.53),
+                    (2, 0.31),
+                    (3, 0.40)]
 
 conduit_type = ['EMT',
                 'ENT',
