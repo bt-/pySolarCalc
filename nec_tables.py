@@ -454,10 +454,11 @@ conduit_type = ['EMT',
                 'PVC-A',
                 'PVC-EB']
 
-# Cross Section of conduit for Conductors and Cables
+""" Cross Section of conduit for Conductors and Cables
 # from NEC 2017 Chapter 9, Table 4
 # conduit_type, conduit trade size, Total Area in INCHES^2 at 100%
-                # Article 358 - Electrical Metallic Tubing (EMT)
+# Article 358 - Electrical Metallic Tubing (EMT)
+"""
 conduit_area = {'EMT': {0.50: 0.304,
                         0.75: 0.533,
                         1.00: 0.864,
