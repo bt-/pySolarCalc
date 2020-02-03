@@ -6,7 +6,7 @@ def lookup(lookup_value, lst):
         if lookup_value <= value:
             return value
 
-        
+
 class Circuit(object):
     """docstring for circuits.
     parent class for dc and ac circuits
@@ -66,7 +66,7 @@ class Circuit(object):
                  voltage=None, current=None, length=None, parallel_sets=1,
                  ccc_count=3, height_above_roof=3.5, temp_high_amb=None,
                  cond_metal=None, cond_insulation=None, cond_size=None,
-                 egc_metal='Cu', egc_size_base=None, neutral=1, 
+                 egc_metal='Cu', egc_size_base=None, neutral=1,
                  conduit_size_SF=1.3, conduit_type='EMT'):
         super(Circuit, self).__init__()
         self.name = name
@@ -154,7 +154,7 @@ class DcCircuit(Circuit):
         self.name = name
         self.ccc_count = ccc_count
 
-        
+
 class AcCircuit(Circuit):
     """docstring for AcCircuit.
     Class for AC circuits.
@@ -163,6 +163,6 @@ class AcCircuit(Circuit):
         super(AcCircuit, self).__init__()
         self.arg = arg
 
-        
+
 if __name__ == '__main__':
     main()
