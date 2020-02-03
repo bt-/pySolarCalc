@@ -13,7 +13,7 @@ ac_circ = osd.Circuit(name='inv01', start='INV.01', end='PV.PNLBD.01',
 class OsdTests(unittest.TestCase):
     """Tests for osd.py."""
     def test_rooftop_adder(self):
-        roof_adders = [(0.5, 60), (0.501, 40), (3.5, 40), (3.501, 30), 
+        roof_adders = [(0.5, 60), (0.501, 40), (3.5, 40), (3.501, 30),
                        (12, 30), (12.01, 25), (36, 25), (36.01, 0)]
         for height_temp_adder_pair in roof_adders:
             print('########################')
@@ -47,9 +47,9 @@ class OsdTests(unittest.TestCase):
         self.assertEqual(round(ac_circ._amb_temp_correction(), 5), 0.70053)
 
     def test_cond_per_raceway_derate(self):
-        cond_derates = [(3, 1), (4, 0.8), (6, 0.8), (7, 0.7), (9, 0.7), (10, 0.5),
-                        (20, 0.5), (21, 0.45), (30, 0.45), (31, 0.4), (40, 0.4),
-                        (41, 0.35)]
+        cond_derates = [(3, 1), (4, 0.8), (6, 0.8), (7, 0.7), (9, 0.7),
+                        (10, 0.5), (20, 0.5), (21, 0.45), (30, 0.45),
+                        (31, 0.4), (40, 0.4), (41, 0.35)]
         for pair in cond_derates:
             ac_circ.ccc_count = pair[0]
             self.assertEqual(pair[1], ac_circ._cond_per_raceway_derate(),
