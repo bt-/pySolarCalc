@@ -468,7 +468,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         3.00: 8.846,
                         3.50: 11.545,
                         4.00: 14.753},
-                # Article 362 - Electrical Nonmetallic Tubing (ENT)
+                 # Article 362 - Electrical Nonmetallic Tubing (ENT)
                  'ENT': {
                         0.50: 0.285,
                         0.75: 0.508,
@@ -476,7 +476,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         1.25: 1.453,
                         1.50: 1.986,
                         2.00: 3.291},
-                # Article 348 - Flexible Metal Conduit (FMC)
+                 # Article 348 - Flexible Metal Conduit (FMC)
                  'FMC': {
                         0.50: 0.317,
                         0.75: 0.533,
@@ -488,7 +488,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         3.00: 7.069,
                         3.50: 9.621,
                         4.00: 12.566},
-                # Article 342 - Intermediate Metal Conduit (IMC)
+                 # Article 342 - Intermediate Metal Conduit (IMC)
                  'IMC': {
                         0.50: 0.342,
                         0.75: 0.586,
@@ -500,7 +500,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         3.00: 7.922,
                         3.50: 10.584,
                         4.00: 13.631},
-                # Article 356.2(1) - Liquidtight Flexible Nonmetallic Conduit (LFNC-A)
+                 # Article 356.2(1) - Liquidtight Flex Nonmet Cond (LFNC-A)
                  'LFNC_A': {
                         0.50: 0.312,
                         0.75: 0.535,
@@ -508,7 +508,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         1.25: 1.502,
                         1.50: 2.018,
                         2.00: 3.343},
-                # Article 356.2(2) - Liquidtight Flexible Nonmetallic Conduit (LFNC-B)
+                 # Article 356.2(2) - Liquidtight Flex Nonmet Cond (LFNC-B)
                  'LFNC_B': {
                         0.50: 0.314,
                         0.75: 0.541,
@@ -516,7 +516,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         1.25: 1.528,
                         1.50: 1.981,
                         2.00: 3.246},
-                # Article 356.2(3) - Liquidtight Flexible Nonmetallic Conduit (LFNC-C)
+                # Article 356.2(3) - Liquidtight Flex Nonmet Cond (LFNC-C)
                  'LFNC_C': {
                         0.50: 0.302,
                         0.75: 0.522,
@@ -524,7 +524,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         1.25: 1.474,
                         1.50: 1.973,
                         2.00: 3.285},
-                # Article 350 - Liquidtight Flexible Metal Conduit (LFMC)
+                 # Article 350 - Liquidtight Flexible Metal Conduit (LFMC)
                  'LFMC': {
                         0.50: 0.314,
                         0.75: 0.541,
@@ -536,7 +536,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         3.00: 7.475,
                         3.50: 9.731,
                         4.00: 12.692},
-                # Article 344 - Rigid Metal Conduit (RMC)
+                 # Article 344 - Rigid Metal Conduit (RMC)
                  'RMC': {
                         0.50: 0.314,
                         0.75: 0.549,
@@ -550,7 +550,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         4.00: 12.882,
                         5.00: 20.212,
                         6.00: 29.158},
-                # Article 352 - Rigid PVC Conduit (PVC), Schedule 80
+                 # Article 352 - Rigid PVC Conduit (PVC), Schedule 80
                  'PVC80': {
                         0.50: 0.217,
                         0.75: 0.409,
@@ -564,7 +564,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         4.00: 11.258,
                         5.00: 17.855,
                         6.00: 25.598},
-                # Article 352 - Rigid PVC Conduit (PVC), Schedule 40
+                 # Article 352 - Rigid PVC Conduit (PVC), Schedule 40
                  'PVC40': {
                         0.50: 0.285,
                         0.75: 0.508,
@@ -578,7 +578,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         4.00: 12.554,
                         5.00: 19.761,
                         6.00: 28.567},
-                # Article 353 - High-Density Polyethylene (HDPE)
+                 # Article 353 - High-Density Polyethylene (HDPE)
                  'HDPE': {
                         0.50: 0.285,
                         0.75: 0.508,
@@ -592,7 +592,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         4.00: 12.554,
                         5.00: 19.761,
                         6.00: 28.567},
-                # Article 352 - Rigid PVC Conduit, Type A
+                 # Article 352 - Rigid PVC Conduit, Type A
                  'PVC-A': {
                         0.50: 0.385,
                         0.75: 0.650,
@@ -604,7 +604,7 @@ conduit_area = {'EMT': {0.50: 0.304,
                         3.00: 8.194,
                         3.50: 10.694,
                         4.00: 13.723},
-                # Article 352 - Rigid PVC Conduit, Type EB
+                 # Article 352 - Rigid PVC Conduit, Type EB
                  'PVC-EB': {
                         2.00: 3.874,
                         3.00: 8.709,
@@ -630,7 +630,7 @@ conduit_material = {'EMT': 'Alum',
                     'PVC-A': 'PVC',
                     'PVC-EB': 'PVC'}
 
-# Copper conductor resistance (R) from NEC 2017 Chapter 9, Table 9
+# Copper resistance (R) from NEC 2017 Ch 9, T9
 # conduit_material, cond_size, cond_resistance per 1000 FEET
 cond_resistance_dc = {'Cu': {
                           '12': 1.980,
@@ -689,7 +689,7 @@ cond_resistance_dc = {'Cu': {
                           '1750': 0.0121,
                           '2000': 0.0106}}
 
-# AC conductor reactance (XL) for all cond_material from NEC 2017 Chapter 9, Table 9
+# AC reactance (XL) for all cond_material from NEC 2017 Ch 9, T9
 # conduit_material, cond_size, cond_reactance per 1000 FEET
 cond_reactance = {'PVC': {
                       '12': 0.054,
@@ -790,7 +790,7 @@ cond_resistance_cu = {'PVC': {
                           '1/0': 0.130,
                           '2/0': 0.100,
                           '3/0': 0.082,
-                           '4/0': 0.067,
+                          '4/0': 0.067,
                           '250': 0.057,
                           '300': 0.049,
                           '350': 0.043,
