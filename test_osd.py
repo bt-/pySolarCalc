@@ -6,11 +6,23 @@ import osd
 class TestGetAmbientTempDerate:
     """Tests of the get_ambient_temp_derate function."""
 
-    def test_typical_inputs(self):
+    @pytest.mark.parametrize("amb_temp,wire_temp,expctd",
+                             [(32, 90, 0.983192),
+                              (43.5, 90, 0.88034),
+                              (23.2, 90, 1.055146),
+                              (43.5, 75, 0.83666),
+                              (43.5, 60, 0.74162),
+                              (0, 60, 1.414213),
+                              (-5, 60, 1.47196)])
+    def test_typical_inputs(self, amb_temp, wire_temp, expctd):
         """Test typical input values."""
-        ambient_temp_derate = osd.get_ambient_temp_derate(32, 90)
-        assert ambient_temp_derate == pytest.approx(0.983192)
+        ambient_temp_derate = osd.get_ambient_temp_derate(amb_temp, wire_temp)
+        assert ambient_temp_derate == pytest.approx(expctd)
 
+    def test_warn_ambient_over_wire_rating(self):
+        """Raise warning if the ambient temp is greater than cable rating."""
+        with pytest.warns(UserWarning):
+            osd.get_ambient_temp_derate(90, 90)
 
 
 

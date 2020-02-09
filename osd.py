@@ -1,3 +1,4 @@
+import warnings
 import nec_tables
 
 def lookup(lookup_value, lst):
@@ -35,6 +36,10 @@ def get_ambient_temp_derate(ambient_temp, wire_insulation_temp,
         The derate required for the ambient temperature.
 
     """
+    if ambient_temp >= wire_insulation_temp:
+        return warnings.warn('Ambient temperature should not equal or '
+                             'exceed cable rating.')
+
     return(((wire_insulation_temp - ambient_temp) /
             (wire_insulation_temp - table_insulation_temp)) ** 0.5)
 
