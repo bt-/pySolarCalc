@@ -1,5 +1,23 @@
 import unittest
+import pytest
 import osd
+
+
+class TestGetAmbientTempDerate:
+    """Tests of the get_ambient_temp_derate function."""
+
+    def test_typical_inputs(self):
+        """Test typical input values."""
+        ambient_temp_derate = osd.get_ambient_temp_derate(32, 90)
+        assert ambient_temp_derate == pytest.approx(0.983192)
+
+
+
+
+
+
+
+
 
 ac_circ = osd.Circuit(name='inv01', start='INV.01', end='PV.PNLBD.01',
                       voltage=480, current=28.9, length=165, parallel_sets=1,

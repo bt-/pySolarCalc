@@ -5,6 +5,39 @@ def lookup(lookup_value, lst):
         if lookup_value <= value:
             return value
 
+def get_ambient_temp_derate(ambient_temp, wire_insulation_temp,
+                            table_insulation_temp=30):
+    """
+    Determine the cable derate required for the ambient temperature.
+
+    Inputs are ambient temperature and wire temperature rating.
+
+    NEC Reference - Equation 310.15(B)(2)
+    Function uses the equation to calculate the ambient temperature derate
+    rather than Table 310.15(B)(2)(a), 30C ambient, or
+    Table 310.15(B)(2)(b), 40C ambient.
+
+    Parameters
+    ----------
+    ambient_temp : numeric
+        The ambient temperature in degrees Celsius.
+    wire_insulation_temp : numeric
+        Wire insulation temperature rating in degrees Celsius.
+        Typically 60, 75, or 90.
+    table_insulation_temp : numeric, default 30
+        Base insulation temperature of the the table used to look up conductor
+        ampacity. Table 310.15(B)(16) is the most commonly used table to lookup
+        conductor ampacities and is based on 30C, thus the 30C default value.
+
+    Returns
+    -------
+    ambient_temp_derate : float
+        The derate required for the ambient temperature.
+
+    """
+    return(((wire_insulation_temp - ambient_temp) /
+            (wire_insulation_temp - table_insulation_temp)) ** 0.5)
+
 class  Circuit(object):
     """docstring for circuits.
     parent class for dc and ac circuits
@@ -112,14 +145,9 @@ class  Circuit(object):
         elif self.height_above_roof > 36:
             return self.temp_high_amb + 0
 
-    def _amb_temp_correction(self):
-        """[Needs to be updated]
-        NEC 310.15(B)(2) Ambient Temperatue Correction Factors.
-        Temp of conductor assumed to be 90C 194F
-        Table temp from 310.15(B)(16) of 30C 86F
-        """
-        t_amb = self._get_amb_temp_plus_rooftop_adder()
-        return(((194.0 - t_amb) / (194.0 - 86)) ** 0.5)
+    def get_amb_temp_derate(self):
+        """Write method to use the top level function."""
+        pass
 
     def _cond_per_raceway_derate(self):
         """[Needs to be updated]
