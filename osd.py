@@ -1,5 +1,5 @@
 import warnings
-import nec_tables
+import nec_tables as nec
 
 
 def lookup(lookup_value, table, keys=True):
@@ -13,7 +13,7 @@ def lookup(lookup_value, table, keys=True):
     ----------
     lookup_value : numeric
         Value to compare against values within the passed table.
-    table : dictionary
+    table : dictionary or list
         The NEC table to perform the lookup against. Import tables from
         nec_tables module.  Many tables are nested and require indexing into
         before passing to this function.
@@ -22,9 +22,13 @@ def lookup(lookup_value, table, keys=True):
         If false, compares the `lookup_value` against the `table` values.
 
     """
-    if not keys:
-        table = {val: key for key, val in table.items()}
-    vals_to_compare = list(table.keys())
+    table_is_dict = isinstance(table, dict)
+    if table_is_dict:
+        if not keys:
+            table = {val: key for key, val in table.items()}
+        vals_to_compare = list(table.keys())
+    else:
+        vals_to_compare = table
 
     if lookup_value > vals_to_compare[-1]:
         return warnings.warn('Lookup value is outside of the table.')
@@ -32,8 +36,12 @@ def lookup(lookup_value, table, keys=True):
     for val in vals_to_compare:
         # print('i: {}, value: {}'.format(i, val))
         if lookup_value <= val:
-            key = val
-            return table[key]
+            # key = val
+            if table_is_dict:
+                return table[val]
+            else:
+                return val
+
 
 def get_ambient_temp_derate(ambient_temp, wire_insulation_temp,
                             table_insulation_temp=30):
@@ -71,6 +79,37 @@ def get_ambient_temp_derate(ambient_temp, wire_insulation_temp,
 
     return(((wire_insulation_temp - ambient_temp) /
             (wire_insulation_temp - table_insulation_temp)) ** 0.5)
+
+
+def get_ocpd(current, voltage_type, ocpd_derate=0.80):
+    """
+    Determine overcurrent protection device (OCPD) size.
+
+    NEC Reference
+    690.8(A)(1)(1) for DC current
+    NEC 240.6 for use of next largest OCPD for currents less than 800A
+    240.6(A) for standard OCPD sizes
+
+    Parameters
+    ----------
+    current : numeric
+        Operating current for the circuit in amps.
+    voltage_type : str
+        Either 'AC' or 'DC' indicating circuit carries alternating or direct
+        current.
+    ocpd_derate : numeric, default 0.8
+        Rating of the overcurrent protective device. Usually 0.8 or 1.
+
+    """
+    if current < 10:
+        current = 10
+
+    if voltage_type is 'DC':
+        current = current * 1.25
+
+    design_current = current / ocpd_derate
+    return lookup(design_current, nec.ocpd_sizes)
+
 
 
 # class Circuit(object):

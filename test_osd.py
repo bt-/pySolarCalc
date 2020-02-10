@@ -5,7 +5,7 @@ import nec_tables as nec
 
 
 class TestLookup:
-    """Test lookup function against various NEC tables."""
+    """Tests of lookup function against various NEC tables."""
 
     def test_warn_lookup_out_of_table(self):
         """Raise warning if the lookup value is outside of the table."""
@@ -54,7 +54,26 @@ class TestGetAmbientTempDerate:
             osd.get_ambient_temp_derate(90, 90)
 
 
+class TestGetOcpd:
+    """Tests of the get_ocpd function."""
 
+    def test_dc(self):
+        """Test DC circuit."""
+        # current is 93.75, next OCPD is 100
+        assert osd.get_ocpd(60, 'DC', ocpd_derate=0.8) == 100
+        # current is 75.0, next OCPD is 80
+        assert osd.get_ocpd(60, 'DC', ocpd_derate=1.0) == 80
+        # current is 437.5, next OCPD is 450
+        assert osd.get_ocpd(280, 'DC', ocpd_derate=0.8) == 450
+
+    def test_ac(self):
+        """Test AC circuit."""
+        assert osd.get_ocpd(60, 'AC', ocpd_derate=0.8) == 80
+        assert osd.get_ocpd(60, 'AC', ocpd_derate=1.0) == 60
+
+    def test_below_ten(self):
+        """Test that currents less than 10 are set to 10A."""
+        assert osd.get_ocpd(9.999, 'DC', ocpd_derate=0.8) == 20
 
 
 
