@@ -76,8 +76,26 @@ class TestGetOcpd:
         assert osd.get_ocpd(9.999, 'DC', ocpd_derate=0.8) == 20
 
 
+class TestGetCableSizingOcpd:
+    """Tests of the get_cable_sizing_ocpd function."""
 
+    def test_below_eight_hundred(self):
+        """Test for ocpd sizes less than 800."""
+        assert osd.get_cable_sizing_ocpd(80) == 70
+        assert osd.get_cable_sizing_ocpd(20) == 15
+        assert osd.get_cable_sizing_ocpd(800) == 700
 
+    def test_above_eight_hundred(self):
+        """Test for ocpd sizes greater than 800."""
+        assert osd.get_cable_sizing_ocpd(1000) == 1000
+        assert osd.get_cable_sizing_ocpd(2500) == 2500
+
+    def test_warn_lookup_out_of_table(self):
+        """Test for ocpd sizes above and below the standard sizes."""
+        with pytest.warns(UserWarning):
+            osd.get_cable_sizing_ocpd(10)
+        with pytest.warns(UserWarning):
+            osd.get_cable_sizing_ocpd(6000.1)
 
 # ac_circ = osd.Circuit(name='inv01', start='INV.01', end='PV.PNLBD.01',
 #                       voltage=480, current=28.9, length=165, parallel_sets=1,

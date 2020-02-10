@@ -111,6 +111,34 @@ def get_ocpd(current, voltage_type, ocpd_derate=0.80):
     return lookup(design_current, nec.ocpd_sizes)
 
 
+def get_cable_sizing_ocpd(ocpd):
+    """
+    Get next smallest standard OCPD size if OCPD is less than 800A.
+
+    NEC Reference - 240.4(B) and (C)
+
+    Parameters
+    ----------
+    ocpd : numeric
+        The ocpd size to be used to protect the circuit.
+
+    Returns
+    -------
+    next_smallest_ocpd : numeric
+        The next smallest standard ocpd size to be used for checking cable
+        ampacity.
+
+    """
+    if ocpd < nec.ocpd_sizes[0] or ocpd > nec.ocpd_sizes[-1]:
+        warnings.warn('OCPD size passed is above or below the standard '
+                      'OCPD sizes.')
+
+    if ocpd <= 800:
+        for i, standard_ocpd in enumerate(nec.ocpd_sizes):
+            if standard_ocpd == ocpd:
+                return nec.ocpd_sizes[i - 1]
+    else:
+        return ocpd
 
 # class Circuit(object):
 #     """docstring for circuits.
