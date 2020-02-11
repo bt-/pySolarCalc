@@ -104,7 +104,7 @@ def get_ocpd(current, voltage_type, ocpd_derate=0.80):
     if current < 10:
         current = 10
 
-    if voltage_type is 'DC':
+    if voltage_type == 'DC':
         current = current * 1.25
 
     design_current = current / ocpd_derate
