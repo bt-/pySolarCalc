@@ -1,6 +1,7 @@
 *.pyc
 *.ipynb_checkpoints
 *.pdf
+*untracked_bin
 
 # Unit test / coverage reports
 htmlcov/
