@@ -9,8 +9,6 @@ sizes = ['12', '10', '8', '6', '4', '3', '2', '1',
          '750', '800', '900', '1000',
          '1250', '1500', '1750', '2000']
 
-three_ten_17 = nec.cable_ampacity_310_17
-
 
 class TestLookup:
     """Tests of lookup function against various NEC tables."""
@@ -185,7 +183,7 @@ class TestGetWireSize310_17:
     def test_310_17_cu_60(self, size, metal, temp, expected):
         """Test a wire sizes with defaults."""
         assert osd.get_wire_ampacity(size, metal, temp,
-                                     ampacity_table=three_ten_17) == expected
+                                     ampacity_table='310_B_17') == expected
 
     ampacities_cu_75 = [35, 50, 70, 95, 125, 145, 170, 195,
                         230, 265, 310, 360,
@@ -202,7 +200,7 @@ class TestGetWireSize310_17:
     def test_310_17_cu_75(self, size, metal, temp, expected):
         """Test a wire sizes with defaults."""
         assert osd.get_wire_ampacity(size, metal, temp,
-                                     ampacity_table=three_ten_17) == expected
+                                     ampacity_table='310_B_17') == expected
 
     ampacities_cu_90 = [40, 55, 80, 105, 140, 165, 190, 220,
                         260, 300, 350, 405,
@@ -219,7 +217,7 @@ class TestGetWireSize310_17:
     def test_310_17_cu_90(self, size, metal, temp, expected):
         """Test a wire sizes with defaults."""
         assert osd.get_wire_ampacity(size, metal, temp,
-                                     ampacity_table=three_ten_17) == expected
+                                     ampacity_table='310_B_17') == expected
 
     ampacities_al_60 = [25, 35, 45, 60, 80, 95, 110, 130,
                         150, 175, 200, 235,
@@ -236,7 +234,7 @@ class TestGetWireSize310_17:
     def test_310_17_al_60(self, size, metal, temp, expected):
         """Test a wire sizes with defaults."""
         assert osd.get_wire_ampacity(size, metal, temp,
-                                     ampacity_table=three_ten_17) == expected
+                                     ampacity_table='310_B_17') == expected
 
     ampacities_al_75 = [30, 40, 55, 75, 100, 115, 135, 155,
                         180, 210, 240, 280,
@@ -253,7 +251,7 @@ class TestGetWireSize310_17:
     def test_310_17_al_75(self, size, metal, temp, expected):
         """Test a wire sizes with defaults."""
         assert osd.get_wire_ampacity(size, metal, temp,
-                                     ampacity_table=three_ten_17) == expected
+                                     ampacity_table='310_B_17') == expected
 
     ampacities_al_90 = [35, 45, 60, 85, 115, 130, 150, 175,
                         205, 235, 270, 315,
@@ -270,7 +268,7 @@ class TestGetWireSize310_17:
     def test_310_17_al_90(self, size, metal, temp, expected):
         """Test a wire sizes with defaults."""
         assert osd.get_wire_ampacity(size, metal, temp,
-                                     ampacity_table=three_ten_17) == expected
+                                     ampacity_table='310_B_17') == expected
 
 
 class TestGetAmbientTempDerate:

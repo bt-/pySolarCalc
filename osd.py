@@ -44,7 +44,7 @@ def lookup(lookup_value, table, keys=True):
 
 
 def get_wire_ampacity(size, metal, wire_insulation_temp, current=None,
-                      derates=1.0, ampacity_table=nec.cable_ampacity_310_16):
+                      derates=1.0, ampacity_table='310_B_16'):
     """
     Lookup ampacity of wire size or check ampacity against passed current.
 
@@ -75,9 +75,9 @@ def get_wire_ampacity(size, metal, wire_insulation_temp, current=None,
         exceeds the passed current.
     derates : numeric, default 1.0
         Derating to be applied to the looked up ampacity.
-    ampacity_table : dict, default 310.16
-        A nested dictionary representing an ampacity table from the NEC.
-        Common tables are availabe from nec_tables.
+    ampacity_table : str, default '310_B_16'
+        String name for ampacity tables. See keys of the ampacity_tables
+        dictionary in the nec_tables for available ampacity tables.
 
     Returns
     -------
@@ -90,6 +90,7 @@ def get_wire_ampacity(size, metal, wire_insulation_temp, current=None,
         current.
 
     """
+    ampacity_table = nec.ampacity_tables[ampacity_table]
     ampacity = ampacity_table[metal][wire_insulation_temp][size]
     if current is None:
         return ampacity * derates

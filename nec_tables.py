@@ -326,6 +326,9 @@ cable_ampacity_310_17 = {'Cu': {60: {'12': 30,
                                      '1750': 1185,
                                      '2000': 1295}}}
 
+ampacity_tables = {'310_B_16': cable_ampacity_310_16,
+                   '310_B_17': cable_ampacity_310_17}
+
 # Standard OCPD sizes from NEC Table 240.6(A)
 ocpd_sizes = [15, 20, 25, 30, 35,
               40, 45, 50, 60, 70,
