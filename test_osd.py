@@ -11,6 +11,7 @@ sizes = ['12', '10', '8', '6', '4', '3', '2', '1',
 
 three_ten_17 = nec.cable_ampacity_310_17
 
+
 class TestLookup:
     """Tests of lookup function against various NEC tables."""
 
