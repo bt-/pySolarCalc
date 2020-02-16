@@ -43,6 +43,60 @@ def lookup(lookup_value, table, keys=True):
                 return val
 
 
+def get_wire_ampacity(size, metal, wire_insulation_temp, current=None,
+                      derates=1.0, ampacity_table=nec.cable_ampacity_310_16):
+    """
+    Lookup ampacity of wire size or check ampacity against passed current.
+
+    By default, function looks up the ampacity for a given conductor size from
+    an NEC ampacity table given a wire material, insulation temperature rating,
+    and the ampacity table.
+
+    Can also be used to return a boolean to check if the ampacity of the cable
+    exceeds a given current.
+
+    Use the lookup function to perform the reverse - find a wire size for a
+    given current.
+
+    Parameters
+    ----------
+    size : str
+        Wire size, which must be an exact match of a wire size in the table.
+    metal : str
+        Type of metal used as the curent carrying conductor. Must be in the
+        table passed.
+        'Cu' or 'Al'
+    wire_insulation_temp : numeric
+        Temperature rating of the conductor insulation. Must be in the table.
+        Typically, 60, 75, or 90.
+    current : numeric, default None
+        Default of None, returns ampacity of the conductor.
+        Pass numeric current value to check if the ampacity of the conductor
+        exceeds the passed current.
+    derates : numeric, default 1.0
+        Derating to be applied to the looked up ampacity.
+    ampacity_table : dict, default 310.16
+        A nested dictionary representing an ampacity table from the NEC.
+        Common tables are availabe from nec_tables.
+
+    Returns
+    -------
+    ampacity : numeric
+        Default is to return the ampacity of the conductor after applying
+        derates, if any are passed.
+    bool
+        If a current is passed, returns True if the looked up ampacity after
+        applying derates, if any are passed, is greater than the passed
+        current.
+
+    """
+    ampacity = ampacity_table[metal][wire_insulation_temp][size]
+    if current is None:
+        return ampacity * derates
+    else:
+        return (ampacity * derates) >= current
+
+
 def get_ambient_temp_derate(ambient_temp, wire_insulation_temp,
                             table_insulation_temp=30):
     """
