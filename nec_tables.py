@@ -1,5 +1,12 @@
-# Cable ampacities from NEC Table 310.16
-cable_ampacity_310_16 = {'Cu': {60: {'12': 20,
+desc_310_16 = "Table 310.15(B)(16) (formerly 310.16) Allowable Ampacities of \
+Insulated Conductors Rated Up to and Including 2000 Volts, 60C Through 90C \
+(140F Through 194F), Not More Than Three Current-Carrying Conductors in \
+Raceway, Cable, or Earth (Directly Buried), Based on Ambient Temperature \
+of 30C (86F)."
+
+cable_ampacity_310_16 = {'desc': desc_310_16,
+                         'base_temp': 30,
+                         'Cu': {60: {'12': 20,
                                      '10': 30,
                                      '8': 40,
                                      '6': 55,
@@ -162,8 +169,13 @@ cable_ampacity_310_16 = {'Cu': {60: {'12': 20,
                                      '1750': 615,
                                      '2000': 630}}}
 
-# Cable ampacities from NEC Table 310.17
-cable_ampacity_310_17 = {'Cu': {60: {'12': 30,
+desc_310_17 = "Table 310.15(B)(17) (formerly Table 310.17) Allowable \
+Ampacities of Single-Insulated Conductors Rated Up to and Including 2000 Volts\
+ in Free Air, Based on Ambient Temperature of 30C (86F)."
+
+cable_ampacity_310_17 = {'desc': desc_310_17,
+                         'base_temp': 30,
+                         'Cu': {60: {'12': 30,
                                      '10': 40,
                                      '8': 60,
                                      '6': 80,
