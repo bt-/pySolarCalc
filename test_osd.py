@@ -292,6 +292,12 @@ class TestGetAmbientTempDerate:
         with pytest.warns(UserWarning):
             osd.get_ambient_temp_derate(90, 90)
 
+    def test_table_ambient(self):
+        """Test when an table ambient temperature is passed."""
+        amb_temp_derate = osd.get_ambient_temp_derate(38, 90,
+                                                      table_ambient_temp=40)
+        assert amb_temp_derate == pytest.approx(1.0198039)
+
 
 class TestGetOcpd:
     """Tests of the get_ocpd function."""
