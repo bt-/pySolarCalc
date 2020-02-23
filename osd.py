@@ -44,7 +44,7 @@ def lookup(lookup_value, table, keys=True):
 
 
 def get_wire_ampacity(size, metal, wire_insulation_temp, current=None,
-                      derates=1.0, ampacity_table='310_B_16'):
+                      ampacity_table='310_B_16', derates=1.0):
     """
     Lookup ampacity of wire size or check ampacity against passed current.
 
