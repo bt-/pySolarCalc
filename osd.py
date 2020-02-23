@@ -43,12 +43,65 @@ def lookup(lookup_value, table, keys=True):
                 return val
 
 
+def get_wire_ampacity(size, metal, wire_insulation_temp, current=None,
+                      ampacity_table='310_B_16', derates=1.0):
+    """
+    Lookup ampacity of wire size or check ampacity against passed current.
+
+    By default, function looks up the ampacity for a given conductor size from
+    an NEC ampacity table given a wire material, insulation temperature rating,
+    and the ampacity table.
+
+    Can also be used to return a boolean to check if the ampacity of the cable
+    exceeds a given current.
+
+    Use the lookup function to perform the reverse - find a wire size for a
+    given current.
+
+    Parameters
+    ----------
+    size : str
+        Wire size, which must be an exact match of a wire size in the table.
+    metal : str
+        Type of metal used as the curent carrying conductor. Must be in the
+        table passed.
+        'Cu' or 'Al'
+    wire_insulation_temp : numeric
+        Temperature rating of the conductor insulation. Must be in the table.
+        Typically, 60, 75, or 90.
+    current : numeric, default None
+        Default of None, returns ampacity of the conductor.
+        Pass numeric current value to check if the ampacity of the conductor
+        exceeds the passed current.
+    derates : numeric, default 1.0
+        Derating to be applied to the looked up ampacity.
+    ampacity_table : str, default '310_B_16'
+        String name for ampacity tables. See keys of the ampacity_tables
+        dictionary in the nec_tables for available ampacity tables.
+
+    Returns
+    -------
+    ampacity : numeric
+        Default is to return the ampacity of the conductor after applying
+        derates, if any are passed.
+    bool
+        If a current is passed, returns True if the looked up ampacity after
+        applying derates, if any are passed, is greater than the passed
+        current.
+
+    """
+    ampacity_table = nec.ampacity_tables[ampacity_table]
+    ampacity = ampacity_table[metal][wire_insulation_temp][size]
+    if current is None:
+        return ampacity * derates
+    else:
+        return (ampacity * derates) >= current
+
+
 def get_ambient_temp_derate(ambient_temp, wire_insulation_temp,
-                            table_insulation_temp=30):
+                            table_ambient_temp=30):
     """
     Determine the cable derate required for the ambient temperature.
-
-    Inputs are ambient temperature and wire temperature rating.
 
     NEC Reference - Equation 310.15(B)(2)
     Function uses the equation to calculate the ambient temperature derate
@@ -62,14 +115,14 @@ def get_ambient_temp_derate(ambient_temp, wire_insulation_temp,
     wire_insulation_temp : numeric
         Wire insulation temperature rating in degrees Celsius.
         Typically 60, 75, or 90.
-    table_insulation_temp : numeric, default 30
-        Base insulation temperature of the the table used to look up conductor
+    table_ambient_temp : numeric, default 30
+        Ambient temperature of the the table used to look up conductor
         ampacity. Table 310.15(B)(16) is the most commonly used table to lookup
         conductor ampacities and is based on 30C, thus the 30C default value.
 
     Returns
     -------
-    ambient_temp_derate : float
+    float
         The derate required for the ambient temperature.
 
     """
@@ -78,7 +131,7 @@ def get_ambient_temp_derate(ambient_temp, wire_insulation_temp,
                              'exceed cable rating.')
 
     return(((wire_insulation_temp - ambient_temp) /
-            (wire_insulation_temp - table_insulation_temp)) ** 0.5)
+            (wire_insulation_temp - table_ambient_temp)) ** 0.5)
 
 
 def get_ocpd(current, voltage_type, ocpd_derate=0.80):

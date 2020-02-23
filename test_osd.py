@@ -2,6 +2,13 @@ import pytest
 import osd
 import nec_tables as nec
 
+sizes = ['12', '10', '8', '6', '4', '3', '2', '1',
+         '1/0', '2/0', '3/0', '4/0',
+         '250', '300', '350',
+         '400', '500', '600', '700',
+         '750', '800', '900', '1000',
+         '1250', '1500', '1750', '2000']
+
 
 class TestLookup:
     """Tests of lookup function against various NEC tables."""
@@ -31,6 +38,239 @@ class TestLookup:
                           keys=False) == '12'
 
 
+class TestGetWireSize:
+    """Tests of wire size other than lookup values."""
+
+    def test_derate(self):
+        """Test the derate functionality."""
+        assert osd.get_wire_ampacity('1/0', 'Cu', 90, derates=0.8) == 136
+
+    def test_derate_current_comparison(self):
+        """Test the comparison against a passed current."""
+        assert osd.get_wire_ampacity('1/0', 'Cu', 90, current=169.9999) is True
+        assert osd.get_wire_ampacity('1/0', 'Cu', 90, current=170) is True
+        assert osd.get_wire_ampacity('1/0', 'Cu', 90, current=170.001) is False
+
+    def test_derate_and_current_comparison(self):
+        """Test the derate and current comparison."""
+        assert osd.get_wire_ampacity('1/0', 'Cu', 90, current=153.01,
+                                     derates=0.9) is False
+
+
+class TestGetWireSize310_16:
+    """Tests of the get wire ampacity function.
+
+    Expected values from test looked up directly from 2017 NEC not from the
+    nec_tables.py file. Serves to also test values in nec_tables.py.
+    """
+
+    ampacities_cu_60 = [20, 30, 40, 55, 70, 85, 95, 110,
+                        125, 145, 165, 195,
+                        215, 240, 260,
+                        280, 320, 350, 385,
+                        400, 410, 435, 455,
+                        495, 525, 545, 555]
+
+    amp_tests_310_16_cu_60 = [(size, 'Cu', 60, exp) for size, exp in
+                              zip(sizes, ampacities_cu_60)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_16_cu_60)
+    def test_310_16_cu_60(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp) == expected
+
+    ampacities_cu_75 = [25, 35, 50, 65, 85, 100, 115, 130,
+                        150, 175, 200, 230,
+                        255, 285, 310,
+                        335, 380, 420, 460,
+                        475, 490, 520, 545,
+                        590, 625, 650, 665]
+
+    amp_tests_310_16_cu_75 = [(size, 'Cu', 75, exp) for size, exp in
+                              zip(sizes, ampacities_cu_75)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_16_cu_75)
+    def test_310_16_cu_75(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp) == expected
+
+    ampacities_cu_90 = [30, 40, 55, 75, 95, 115, 130, 145,
+                        170, 195, 225, 260,
+                        290, 320, 350,
+                        380, 430, 475, 520,
+                        535, 555, 585, 615,
+                        665, 705, 735, 750]
+
+    amp_tests_310_16_cu_90 = [(size, 'Cu', 90, exp) for size, exp in
+                              zip(sizes, ampacities_cu_90)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_16_cu_90)
+    def test_310_16_cu_90(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp) == expected
+
+    ampacities_al_60 = [15, 25, 35, 40, 55, 65, 75, 85,
+                        100, 115, 130, 150,
+                        170, 195, 210,
+                        225, 260, 285, 315,
+                        320, 330, 355, 375,
+                        405, 435, 455, 470]
+
+    amp_tests_310_16_al_60 = [(size, 'Al', 60, exp) for size, exp in
+                              zip(sizes, ampacities_al_60)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_16_al_60)
+    def test_310_16_al_60(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp) == expected
+
+    ampacities_al_75 = [20, 30, 40, 50, 65, 75, 90, 100,
+                        120, 135, 155, 180,
+                        205, 230, 250,
+                        270, 310, 340, 375,
+                        385, 395, 425, 445,
+                        485, 520, 545, 560]
+
+    amp_tests_310_16_al_75 = [(size, 'Al', 75, exp) for size, exp in
+                              zip(sizes, ampacities_al_75)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_16_al_75)
+    def test_310_16_al_75(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp) == expected
+
+    ampacities_al_90 = [25, 35, 45, 55, 75, 85, 100, 115,
+                        135, 150, 175, 205,
+                        230, 260, 280,
+                        305, 350, 385, 425,
+                        435, 445, 480, 500,
+                        545, 585, 615, 630]
+
+    amp_tests_310_16_al_90 = [(size, 'Al', 90, exp) for size, exp in
+                              zip(sizes, ampacities_al_90)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_16_al_90)
+    def test_310_16_al_90(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp) == expected
+
+
+class TestGetWireSize310_17:
+    """Tests of the get wire ampacity function.
+
+    Expected values from test looked up directly from 2017 NEC not from the
+    nec_tables.py file. Serves to also test values in nec_tables.py.
+    """
+
+    ampacities_cu_60 = [30, 40, 60, 80, 105, 120, 140, 165,
+                        195, 225, 260, 300,
+                        340, 375, 420,
+                        455, 515, 575, 630,
+                        655, 680, 730, 780,
+                        890, 980, 1070, 1155]
+
+    amp_tests_310_17_cu_60 = [(size, 'Cu', 60, exp) for size, exp in
+                              zip(sizes, ampacities_cu_60)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_17_cu_60)
+    def test_310_17_cu_60(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp,
+                                     ampacity_table='310_B_17') == expected
+
+    ampacities_cu_75 = [35, 50, 70, 95, 125, 145, 170, 195,
+                        230, 265, 310, 360,
+                        405, 445, 505,
+                        545, 620, 690, 755,
+                        785, 815, 870, 935,
+                        1065, 1175, 1280, 1385]
+
+    amp_tests_310_17_cu_75 = [(size, 'Cu', 75, exp) for size, exp in
+                              zip(sizes, ampacities_cu_75)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_17_cu_75)
+    def test_310_17_cu_75(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp,
+                                     ampacity_table='310_B_17') == expected
+
+    ampacities_cu_90 = [40, 55, 80, 105, 140, 165, 190, 220,
+                        260, 300, 350, 405,
+                        455, 500, 570,
+                        615, 700, 780, 850,
+                        885, 920, 980, 1055,
+                        1200, 1325, 1445, 1560]
+
+    amp_tests_310_17_cu_90 = [(size, 'Cu', 90, exp) for size, exp in
+                              zip(sizes, ampacities_cu_90)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_17_cu_90)
+    def test_310_17_cu_90(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp,
+                                     ampacity_table='310_B_17') == expected
+
+    ampacities_al_60 = [25, 35, 45, 60, 80, 95, 110, 130,
+                        150, 175, 200, 235,
+                        265, 290, 330,
+                        355, 405, 455, 500,
+                        515, 535, 580, 625,
+                        710, 795, 875, 960]
+
+    amp_tests_310_17_al_60 = [(size, 'Al', 60, exp) for size, exp in
+                              zip(sizes, ampacities_al_60)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_17_al_60)
+    def test_310_17_al_60(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp,
+                                     ampacity_table='310_B_17') == expected
+
+    ampacities_al_75 = [30, 40, 55, 75, 100, 115, 135, 155,
+                        180, 210, 240, 280,
+                        315, 350, 395,
+                        425, 485, 545, 595,
+                        620, 645, 700, 750,
+                        855, 950, 1050, 1150]
+
+    amp_tests_310_17_al_75 = [(size, 'Al', 75, exp) for size, exp in
+                              zip(sizes, ampacities_al_75)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_17_al_75)
+    def test_310_17_al_75(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp,
+                                     ampacity_table='310_B_17') == expected
+
+    ampacities_al_90 = [35, 45, 60, 85, 115, 130, 150, 175,
+                        205, 235, 270, 315,
+                        355, 395, 445,
+                        480, 545, 615, 670,
+                        700, 725, 790, 845,
+                        965, 1070, 1185, 1295]
+
+    amp_tests_310_17_al_90 = [(size, 'Al', 90, exp) for size, exp in
+                              zip(sizes, ampacities_al_90)]
+
+    @pytest.mark.parametrize("size,metal,temp,expected",
+                             amp_tests_310_17_al_90)
+    def test_310_17_al_90(self, size, metal, temp, expected):
+        """Test a wire sizes with defaults."""
+        assert osd.get_wire_ampacity(size, metal, temp,
+                                     ampacity_table='310_B_17') == expected
+
+
 class TestGetAmbientTempDerate:
     """Tests of the get_ambient_temp_derate function."""
 
@@ -51,6 +291,12 @@ class TestGetAmbientTempDerate:
         """Raise warning if the ambient temp is greater than cable rating."""
         with pytest.warns(UserWarning):
             osd.get_ambient_temp_derate(90, 90)
+
+    def test_table_ambient(self):
+        """Test when an table ambient temperature is passed."""
+        amb_temp_derate = osd.get_ambient_temp_derate(38, 90,
+                                                      table_ambient_temp=40)
+        assert amb_temp_derate == pytest.approx(1.0198039)
 
 
 class TestGetOcpd:
